@@ -42,11 +42,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen
 
     public DobbeltLenketListe() {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public DobbeltLenketListe(T[] a) {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        if (a == null){
+            throw new NullPointerException("Tabellen a er null");
+        }
+
+
     }
 
     public Liste<T> subliste(int fra, int til){
@@ -55,12 +60,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        throw new NotImplementedException();
+        return antall;
     }
 
     @Override
     public boolean tom() {
-        throw new NotImplementedException();
+        return antall == 0;
     }
 
     @Override
