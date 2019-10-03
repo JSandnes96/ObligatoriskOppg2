@@ -46,10 +46,31 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public DobbeltLenketListe(T[] a) {
-        //throw new NotImplementedException();
+        this();
+
         if (a == null){
             throw new NullPointerException("Tabellen a er null");
         }
+
+        int i = 0; for (; i < a.length && a[i] == null; i++);
+
+        if (i < a.length)
+        {
+            Node<T> p = hode = new Node<T>(a[i], null, null);  // den første noden
+            antall = 1;                                 // vi har minst en node
+
+            for (i++; i < a.length; i++)
+            {
+                if (a[i] != null)
+                {
+                    p = p.neste = new Node<T>(a[i], null, null);   // en ny node
+                    antall++;
+                }
+            }
+            hale = p;
+        }
+
+
 
 
     }
@@ -70,12 +91,25 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean leggInn(T verdi) {
-        throw new NotImplementedException();
+        Objects.requireNonNull(verdi, "Du kan ikke ha null-verdier");
+        if (antall == 0){
+            hode = hale = new Node<T>(verdi, null, null); //Ved tom liste
+        }
+        else{
+            hale = hale.neste = new Node<T>(verdi, null, null); //ellers legges den bakerst
+        }
+
+        antall++; //antallet noder i listen øker
+        return true;
     }
 
     @Override
     public void leggInn(int indeks, T verdi) {
-        throw new NotImplementedException();
+
+        Objects.requireNonNull(verdi, "Du kan ikke ha null-verdier");
+
+
+
     }
 
     @Override
@@ -115,11 +149,51 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        StringBuilder s = new StringBuilder();
+
+        s.append('[');
+
+        if (!tom())
+        {
+            Node<T> p = hode;
+            s.append(p.verdi);
+
+            p = p.neste;
+
+            while (p != null)  // tar med resten hvis det er noe mer
+            {
+                s.append(',').append(' ').append(p.verdi);
+                p = p.neste;
+            }
+        }
+
+        s.append(']');
+
+        return s.toString();
     }
 
     public String omvendtString() {
-        throw new NotImplementedException();
+        StringBuilder s = new StringBuilder();
+
+        s.append('[');
+
+        if (!tom())
+        {
+            Node<T> p = hale;
+            s.append(p.verdi);
+
+            p = p.forrige;
+
+            while (p != null)  // tar med resten hvis det er noe mer
+            {
+                s.append(',').append(' ').append(p.verdi);
+                p = p.forrige;
+            }
+        }
+
+        s.append(']');
+
+        return s.toString();
     }
 
     @Override
