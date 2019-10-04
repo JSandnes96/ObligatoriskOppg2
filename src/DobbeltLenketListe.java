@@ -114,8 +114,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean inneholder(T verdi) {
-        throw new NotImplementedException();
+        return indeksTil(verdi) != -1;
     }
+    /*
+    @Override
+    private Node<T> finnNode(int indeks){
+        Node<T> p = hode;
+        Node<T> t = hale;
+
+
+
+    }*/
+
 
     @Override
     public T hent(int indeks) {
@@ -124,7 +134,21 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int indeksTil(T verdi) {
-        throw new NotImplementedException();
+
+        if(verdi == null){
+            return -1;
+        }
+
+        Node<T> p = hode;
+
+        for(int i = 0; i < antall; i++){
+            if(p.verdi.equals(verdi)){
+                return i;
+            }
+            p = p.neste; //Kanskje denne må flyttes
+        }
+        return -1;
+
     }
 
     @Override
@@ -134,7 +158,48 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new NotImplementedException();
+        if (verdi == null){ //ingen nullverdier i listen
+            return false;
+        }
+
+        Node<T> q = hode; //hjelpepeker
+        Node<T> p = hale; //hjelpepeker
+
+        while (q != null){              //q skal finne verdien t
+            if (q.verdi.equals(verdi)) {
+                break;                  //verdien er funnet
+            }
+            p = q;
+            q = q.neste;
+        }
+
+
+        if(q == null){
+            return false;  //fant ikke verdi
+        }
+
+        else if(q == hode){
+            hode = hode.neste;  //går forbi q
+        }
+
+        else{
+            p.neste = q.neste; //går forbi q
+        }
+
+
+        if(q == hale){
+            hale = p;  //oppdaterer hale
+        }
+
+
+        q.verdi = null; //nuller verdien til q
+        q.neste = null; //nuller nestepeker
+
+        antall--; //en node mindre i listen
+
+        return true; //vellykket fjerning
+
+
     }
 
     @Override
@@ -144,7 +209,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
-        throw new NotImplementedException();
+        //1
+        Node<T> p = hode;
+        Node<T> q = null;
+
+        while (p != null){
+            q = p.neste;
+            p.neste = null;
+            p.verdi = null;
+            p = q;
+        }
+
+        hode = hale = null;
+        antall = 0;
+
+
+        //2
+
+
     }
 
     @Override
