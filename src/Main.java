@@ -8,6 +8,8 @@ public class Main {
 
         System.out.println(liste.antall() + "​" + liste.tom());
 
+        liste.toString();
+
     }
 }
 
